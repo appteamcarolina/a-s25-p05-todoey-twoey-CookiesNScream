@@ -9,7 +9,7 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var vm = TodoListViewModel()
     @State private var newTodoTitle: String = ""
-    
+
     var body: some View {
         NavigationStack {
             List {
@@ -23,12 +23,11 @@ struct ContentView: View {
                             }
                         }
                 }
-                
                 switch vm.state {
-                    case .idle: Text("Make a request")
-                    case .loading: Text("Loading...")
-                    case .success(let todos): todoListView(todos: todos)
-                    case .error(let message): Text("Error: \(message)")
+                case .idle: Text("Make a request")
+                case .loading: Text("Loading...")
+                case .success(let todos): todoListView(todos: todos)
+                case .error(let message): Text("Error: \(message)")
                 }
             }
             .navigationTitle("Todoey Twoey")
@@ -40,7 +39,7 @@ struct ContentView: View {
             await vm.fetchTodos()
         }
     }
-    
+
     @ViewBuilder
     private func todoListView(todos: [Todo]) -> some View {
         if !todos.isEmpty {
@@ -51,12 +50,13 @@ struct ContentView: View {
                         await vm.fetchTodos()
                     }
                 } label: {
-                    HStack{
-                        Image(systemName: todo.isCompleted ? "circle.fill" : "circle")
+                    HStack {
+                        Image(
+                            systemName: todo.isCompleted
+                                ? "circle.fill" : "circle")
                         Text(todo.title)
                             .foregroundStyle(Color.black)
                     }
-                    //Label(todo.title, systemImage: todo.isCompleted ? "circle.fill" : "circle")
                 }
                 .swipeActions {
                     Button(role: .destructive) {
@@ -72,7 +72,7 @@ struct ContentView: View {
         } else {
             HStack {
                 Spacer()
-                VStack (alignment: .center){
+                VStack(alignment: .center) {
                     Image(systemName: "checklist.checked")
                         .font(.system(size: 50))
                     Text("There is nothing to do right now!")
@@ -82,4 +82,3 @@ struct ContentView: View {
         }
     }
 }
-

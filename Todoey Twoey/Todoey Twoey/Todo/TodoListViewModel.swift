@@ -15,11 +15,10 @@ enum TodoListLoadingState {
     case error(String)
 }
 
-
 @MainActor
 class TodoListViewModel: ObservableObject {
     @Published var state: TodoListLoadingState = .idle
-    
+
     func fetchTodos() async {
         do {
             let todos = try await TodoListService.getTodos()
@@ -37,7 +36,7 @@ class TodoListViewModel: ObservableObject {
     }
 
     func createTodo(title: String) async {
-                // TODO: Implement createTodo using TodoListService.create() (see fetchTodos)
+        // TODO: Implement createTodo using TodoListService.create() (see fetchTodos)
         do {
             _ = try await TodoListService.create(newTodo: NewTodo(title: title))
         } catch {
@@ -46,7 +45,7 @@ class TodoListViewModel: ObservableObject {
     }
 
     func delete(todo: Todo) async {
-                // TODO: Implement delete
+        // TODO: Implement delete
         do {
             try await TodoListService.delete(todo: todo)
         } catch {
@@ -55,9 +54,10 @@ class TodoListViewModel: ObservableObject {
     }
 
     func toggleCompletion(for todo: Todo) async {
-                // TODO: Implement toggleCompletion
+        // TODO: Implement toggleCompletion
         do {
-            try await TodoListService.updateCompletion(for: todo, isCompleted: !todo.isCompleted)
+            try await TodoListService.updateCompletion(
+                for: todo, isCompleted: !todo.isCompleted)
         } catch {
             print("Something bad happened")
         }
